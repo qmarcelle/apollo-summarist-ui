@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\conf\apollo-dev-beanstalk.conf,C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\target\scala-2.11\classes\apollo-dev-beanstalk.conf)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\conf\application.conf,C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\target\scala-2.11\classes\application.conf)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\conf\generated.keystore,C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\target\scala-2.11\classes\generated.keystore)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\conf\logback.xml,C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\target\scala-2.11\classes\logback.xml)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\conf\routes,C:\Users\qmarcelle\Documents\GitHub\elemica projects\apollo-summarist-ui\target\scala-2.11\classes\routes)[0m

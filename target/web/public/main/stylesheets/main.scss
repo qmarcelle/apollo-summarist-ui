@@ -1,0 +1,207 @@
+@import "public-assets";
+
+.logoheader {
+     background-image: url($public-assets + "/images/logo3_stretch.gif");
+     background-repeat: repeat-x;
+}
+
+body {
+    font-family: OpenSans;
+    font-size: 13px;
+    color: #4C4C4C;
+    line-height: 18px;
+    background-color: #E5E6E6;
+ }
+
+button.login {
+    background: #3E3E3E;
+    border-radius: 3px;
+    font-family: OpenSans-Bold;
+    font-size: 13px;
+    color: #FAFAFA;
+    letter-spacing: 0.3px;
+}
+
+button.cancel {
+    background: #EFEFEF;
+    border: 1px solid #818181;
+    border-radius: 4px;
+    font-family: OpenSans-
+    Semibold;
+    font-size: 13px;
+    color: #5D5D5D;
+    line-height: 18px;
+}
+
+.dropDownSelected {
+    background: #FAFAFA;
+    border: 1px solid #CBCCCC;
+    border-radius: 4px;
+    font-family: OpenSans;
+    font-size: 13px; color: #4C4C4C;
+    line-height: 18px;
+    font-family: FontAwesome;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 13px;
+}
+
+div.alert-danger {
+
+    background: #F7D9DC;
+    border-radius: 5px;
+    font-family: OpenSans;
+    font-size: 13px; color: #4C4C4C;
+    line-height: 17px;
+    max-width: 25%;
+}
+
+.myBody {
+    font-family: OpenSans;
+    font-size: 13px;
+    color: #4C4C4C;
+    line-height: 18px;
+    background-color: #E5E6E6;
+ }
+
+
+alert {
+
+    background: #F7D9DC;
+    border-radius: 5px;
+    font-family: OpenSans;
+    font-size: 13px; color: #4C4C4C;
+    line-height: 17px;
+    max-width: 25%;
+}
+
+.tableHead, th {
+    font-family: OpenSans-Semibold;
+    font-size: 15px;
+    background: #4C4C4C;
+    line-height: 20px;
+    color: #FAFAFA;
+    align: center;
+
+}
+
+
+.table table-striped, td {
+    background: #FAFAFA;
+    align: center;
+}
+
+#tableHead {
+    font-family: OpenSans;
+    font-size: 13px;
+    color: #4C4C4C;
+    line-height: 18px;
+    vertical-align: middle;
+    background-color: #E5E6E6;
+}
+
+.tableTitle {
+    font-family: OpenSans;
+    font-size: 26px;
+    color: #007BB4;
+    line-height: 36px
+}
+
+
+#simpleSearch {
+        background: url(search-white.png) no-repeat 10px 6px #fcfcfc;
+        font-family: OpenSans;
+        font-size: 15px;
+        color: #A0A0A0;
+        line-height: 20px;
+        width: 170px;
+        height: 35px;
+        padding: 6px 15px 6px 35px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border: 1px solid #CBCCCC;
+        border-radius: 20px;
+        text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        -webkit-transition: all 0.7s ease 0s;
+        -moz-transition: all 0.7s ease 0s;
+        -o-transition: all 0.7s ease 0s;
+        transition: all 0.7s ease 0s;
+}
+
+
+.page-select {
+   width: 30px;
+   height: 20px;
+}
+
+.select-page {
+  width: 70px;
+  text-align: center;
+}
+.pagination li a input {
+  padding: 0;
+  margin: -5px 0;
+}
+
+
+
+#userHeadTable {
+   width: 60px;
+}
+
+.itemsPerPage {
+    float: right;
+    width: 100px;
+}
+
+
+select.form-control {
+    background:#202020;
+    color:#B0B0B0;
+    width:110px;
+    font-size: 13px;
+    height: 50px;
+    border-color:#202020;
+    -webkit-appearance: none;
+}
+
+#companyTable {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.ipp {
+    font-family: OpenSans-Semibold;
+    font-size: 14px;
+    color: #4C4C4C;
+    line-height: 19px
+}
+
+.labelSearch {
+    color:#007BB4;
+}
+
+th {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    padding: 0;
+}
+
+col.nameCol {
+    width: 45%;
+}
+col.idCol {
+    width: 30%;
+}
+col.idTypeCol {
+    width: 10%;
+}
+col.childCol {
+    width: 10%;
+}
+col.editCol {
+   width: 5%;
+}

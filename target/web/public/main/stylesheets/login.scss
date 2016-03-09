@@ -1,0 +1,288 @@
+/*
+button.login {
+    background: #3E3E3E;
+    border-radius: 3px;
+    font-family: OpenSans-Bold;
+    font-size: 13px;
+    color: #FAFAFA;
+    letter-spacing: 0.3px;
+}
+
+button.cancel {
+    background: #EFEFEF;
+    border: 1px solid #818181;
+    border-radius: 4px;
+    font-family: OpenSans-
+    Semibold;
+    font-size: 13px;
+    color: #5D5D5D;
+    line-height: 18px;
+}
+
+.DropDown {
+    background: #FAFAFA;
+    border: 1px solid #CBCCCC;
+    border-radius: 4px;
+    font-family: OpenSans;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 18px;
+    font-family: FontAwesome;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 13px;
+}
+
+p {
+    color: red;
+    text-align: center;
+}
+
+button.cancel {
+    background: #EFEFEF;
+    border: 1px solid #818181;
+    border-radius: 4px;
+    font-family: OpenSans-
+    Semibold;
+    font-size: 13px;
+    color: #5D5D5D;
+    line-height: 18px;
+}
+
+
+
+div.loginButton {
+    margin-top: -1cm;
+}
+
+button.login {
+    background: #3E3E3E;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 12px;
+    color: #FAFAFA;
+    /!*letter-spacing: 0.3px;*!/
+    width: 10.5em;
+    height: 3.6em;
+    margin-left: 70px;
+}
+
+button.cancel {
+    background: #EFEFEF;
+    border: 1px solid #818181;
+    border-radius: 4px;
+    font-family: OpenSans-
+    Semibold;
+    font-size: 13px;
+    color: #5D5D5D;
+    line-height: 18px;
+    width: 8em;
+    height: 2.5em;
+    margin-right: 15px;
+}
+
+.dropDownSelected {
+    background: #FAFAFA;
+    border: 1px solid #CBCCCC;
+    border-radius: 4px;
+    font-family: OpenSans;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 18px;
+    // Icon
+    font-family: FontAwesome;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 13px;
+}
+
+
+
+div.loginPage {
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    margin: 0px auto;
+    width: 500px;
+    height: 100px;
+}
+
+.loginTitle {
+   font-family: Verdana;
+   font-size: 14px;
+   color: #4C4C4C;
+   line-height: 35px;
+   font-weight: 600;
+}
+
+br.titleSpace {
+    line-height:150px;
+}
+
+.loginInput {
+    background-color: #FAFAFA;
+    border:solid 0px #BFBDBD;
+    color: black;
+    font-size: 15px;
+    font-color: #A0A0A0;
+    font-family: Sans-serif;
+    height: 45px;
+    padding-left:10px;
+    width: 400px;
+    margin-bottom:2px;
+}
+
+
+#elem {
+    color: white;
+    font-size: 72px;
+    font-family: Sans-serif;
+    font-weight: 600;
+}
+
+.fpassword {
+    color: white;
+    margin-right: 80px;
+    font-size: 15px;
+    font-family: Sans-serif;
+}
+
+.policy {
+    color: white;
+    font-family: Sans-serif;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 60px;
+
+}
+
+img.loginLogo {
+    color: #FFFFFF;
+    width: 300px;
+    height: 60px;
+    filter:brightness(0) invert(1);
+}
+
+
+
+#loginButton {
+    margin-top: -1cm;
+    margin-left: -0.75cm;
+}
+
+#LOGIN {
+    background: #3E3E3E;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 12px;
+    color: #FAFAFA;
+    width: 10.5em;
+    height: 3.6em;
+    margin-left: 70px;
+}
+
+#Cancel {
+    background: #EFEFEF;
+    border: 1px solid #818181;
+    border-radius: 4px;
+    font-family: OpenSans-
+    Semibold;
+    font-size: 13px;
+    color: #5D5D5D;
+    line-height: 18px;
+    width: 8em;
+    height: 2.5em;
+    margin-right: 15px;
+}
+
+select {
+    background: white;
+    border: 1px solid #CBCCCC;
+    border-radius: 4px;
+    // Pharetra bibendum
+    font-family: OpenSans;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 18px;
+    font-family: FontAwesome;
+    font-size: 13px; color: #A0A0A0;
+    line-height: 13px;
+}
+
+.alert {
+    width:300px;
+}
+
+
+div.loginPage {
+    margin: 0px auto;
+    width: 500px;
+    height: 100px;
+}
+
+#loginTitle {
+   font-family: Verdana;
+   font-size: 14px;
+   color: #4C4C4C;
+   line-height: 35px;
+   font-weight: 600;
+   margin-top: 25px;
+}
+
+br.titleSpace {
+    line-height:150px;
+}
+
+#loginClass {
+    margin-top: 15px;
+}
+#username {
+    background-color: #FAFAFA;
+    border:solid 0px #BFBDBD;
+    color: black;
+    font-size: 15px;
+    font-color: #A0A0A0;
+    font-family: Sans-serif;
+    height: 45px;
+    padding-left:10px;
+    width: 400px;
+    margin-bottom:2px;
+
+}
+
+#password {
+    background-color: #FAFAFA;
+    border:solid 0px #BFBDBD;
+    color: black;
+    font-size: 15px;
+    font-color: #A0A0A0;
+    font-family: Sans-serif;
+    height: 45px;
+    padding-left:10px;
+    width: 400px;
+    margin-bottom:2px;
+}
+
+
+#policyWord {
+    color: white;
+    margin-right: 80px;
+    font-size: 15px;
+    font-family: Sans-serif;
+}
+
+
+#policy {
+    color: white;
+    font-family: Sans-serif;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 35px;
+
+}
+
+#loginLogo {
+    color: #FFFFFF;
+    width: 300px;
+    height: 60px;
+    filter:brightness(0) invert(1);
+}
+
+hr {
+   margin-top: -3.5cm;
+}*/

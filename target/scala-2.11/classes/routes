@@ -1,0 +1,36 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /favicon.ico        controllers.Assets.at(path="/public",file="favicon.ico")
+GET         /public/app/*file   controllers.Assets.at(path="/public/app", file)
+
+GET         /public/assets/images/*file    controllers.Assets.at(path="/public/assets/images/", file)
+
+GET         /components/auth/*file    controllers.Assets.at(path="/public/components/auth/", file)
+
+GET         /components/navbar/*file    controllers.Assets.at(path="/public/components/navbar/", file)
+
+GET         /css/*file    controllers.Assets.at(path="/public/css", file)
+
+GET         /bower_components/*file    controllers.Assets.at(path="/public/bower_components", file)
+GET         /app/*file    controllers.Assets.at(path="/public/app", file)
+GET         /css/*file    controllers.Assets.at(path="/public/css", file)
+
+
+#all possible views route to index.html to allow angular to handle the routing
+GET         /           controllers.Assets.at(path="/public", file="index.html")
+GET         /index.html        controllers.Assets.at(path="/public", file="index.html")
+GET         /main_page       controllers.Assets.at(path="/public", file="index.html")
+GET         /login        controllers.Assets.at(path="/public", file="index.html")
+
+
+GET        /*url                controllers.Application.gateway(url)
+
+POST       /*url                controllers.Application.gatewayPost(url)
+
+
+#GET         /public/*file        controllers.Assets.at(path="/public", file="index.html")
+
+

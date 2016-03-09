@@ -1,0 +1,23 @@
+#dropDownSelected {
+    background: $elemicaWhite;
+    border: 1px solid #CBCCCC;
+    border-radius: 4px;
+    font-family: OpenSans;
+    font-size: 13px;
+    color: $inputFontColor;
+    line-height: 18px;
+    font-family: FontAwesome;
+    font-size: 13px; color: $inputFontColor ;
+    line-height: 13px;
+}
+
+#loginBtn {
+    background: $loginButton;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 12px;
+    color: $elemicaWhite;
+    width: 10.5em;
+    height: 3.6em;
+    margin-left: 70px;
+}
