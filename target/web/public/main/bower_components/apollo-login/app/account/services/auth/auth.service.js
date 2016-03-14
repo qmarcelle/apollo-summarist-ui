@@ -3,7 +3,7 @@
  */
 
 //Interceptor for store the token into header for all calls
-app.service('Auth',['$http', 'session','$state', '$location',function ($http, session,$state, $location){
+app.service('Auth',['$http', 'session','$state', '$location','$rootScope',function ($http, session,$state, $location,$rootScope){
     /**
      * Check whether the user is logged in
      * @returns boolean
@@ -32,12 +32,12 @@ app.service('Auth',['$http', 'session','$state', '$location',function ($http, se
             console.log("tried to post to login");
             //set the token variable
             token = session.getAccessToken();
-            /*/!*if ($rootScope.state) {
+            if ($rootScope.state) {
               $state.go($rootScope.state);
             } else {
-              $state.go('companies');
-            }*!/*/
-            $location.path('/supply_chain')
+              $state.go('summarist');
+            }
+           // $location.path('/supply_chain')
           }
           ///fix for locked account / bad login logic invalid credentials
           else if (response.data.success === false /*&& typeof response.data !== 'undefined' && typeof response.data.validationErrors == "undefined"*/) {
@@ -60,5 +60,40 @@ app.service('Auth',['$http', 'session','$state', '$location',function ($http, se
 
     };
 
-  }]);
+  }])
+
+//auth interceptor
+  .service("authInterceptor", function($q, $location) {
+    var service = this;
+    service.request = function(config) {
+      var access_token = localStorage.auth_token ? localStorage.auth_token.replace(/"/g,'') : null;
+      /*remove leading quotes and ending quotes from auth token*/
+
+      config.headers = config.headers || {};
+      if (access_token) {
+        config.headers['X-AUTH-TOKEN'] = access_token;
+      }
+      return config;
+    };
+    service.response = function(res) {
+      //check for errors
+      if(res.status === 401){
+        //redirect to login
+        $location.path('/login');
+        //remove any stale tokens
+        window.localStorage.removeItem('auth_token');
+        return $q.reject(res);
+      }
+      else if(res.status === 500){
+        //redirect to login
+        $location.path('/login');
+        //remove any stale tokens
+        window.localStorage.removeItem('auth_token');
+        return $q.reject(res);
+      }
+      else{
+        return res;
+      }
+    }
+  });
 

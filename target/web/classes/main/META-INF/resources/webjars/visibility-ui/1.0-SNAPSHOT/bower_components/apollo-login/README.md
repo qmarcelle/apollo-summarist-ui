@@ -2,7 +2,7 @@
 
 Step One  
 in the same location as bower.json, run this command in the terminal:
-bower install https://github.com/qmarcelle-elemica/apollo-login.git -S
+bower install git@github.com:elemica/apollo-commons-ui.git -S
 
 Step Two
 include "apollo-login" as a dependency of the module for which login functionality is desired

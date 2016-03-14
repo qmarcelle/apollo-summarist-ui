@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Mon Mar 07 12:19:33 EST 2016
+// @DATE:Fri Mar 11 09:58:12 EST 2016
 
 package router
 
@@ -18,7 +18,7 @@ class Routes(
   override val errorHandler: play.api.http.HttpErrorHandler, 
   // @LINE:6
   Assets_1: controllers.Assets,
-  // @LINE:29
+  // @LINE:33
   Application_0: controllers.Application,
   val prefix: String
 ) extends GeneratedRouter {
@@ -27,7 +27,7 @@ class Routes(
    def this(errorHandler: play.api.http.HttpErrorHandler,
     // @LINE:6
     Assets_1: controllers.Assets,
-    // @LINE:29
+    // @LINE:33
     Application_0: controllers.Application
   ) = this(errorHandler, Assets_1, Application_0, "/")
 
@@ -54,8 +54,9 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """css/$file<.+>""", """controllers.Assets.at(path:String = "/public/css", file:String)"""),
     ("""GET""", this.prefix, """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """index.html""", """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """main_page""", """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """summarist""", """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """login""", """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """login/""", """controllers.Assets.at(path:String = "/public", file:String = "index.html")"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """$url<.+>""", """controllers.Application.gateway(url:String)"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """$url<.+>""", """controllers.Application.gatewayPost(url:String)"""),
     Nil
@@ -254,7 +255,7 @@ class Routes(
 
   // @LINE:25
   private[this] lazy val controllers_Assets_at11_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("main_page")))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("summarist")))
   )
   private[this] lazy val controllers_Assets_at11_invoker = createInvoker(
     Assets_1.at(fakeValue[String], fakeValue[String]),
@@ -265,7 +266,7 @@ class Routes(
       Seq(classOf[String], classOf[String]),
       "GET",
       """""",
-      this.prefix + """main_page"""
+      this.prefix + """summarist"""
     )
   )
 
@@ -286,11 +287,28 @@ class Routes(
     )
   )
 
-  // @LINE:29
-  private[this] lazy val controllers_Application_gateway13_route = Route("GET",
+  // @LINE:27
+  private[this] lazy val controllers_Assets_at13_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("login/")))
+  )
+  private[this] lazy val controllers_Assets_at13_invoker = createInvoker(
+    Assets_1.at(fakeValue[String], fakeValue[String]),
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.Assets",
+      "at",
+      Seq(classOf[String], classOf[String]),
+      "GET",
+      """""",
+      this.prefix + """login/"""
+    )
+  )
+
+  // @LINE:33
+  private[this] lazy val controllers_Application_gateway14_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), DynamicPart("url", """.+""",false)))
   )
-  private[this] lazy val controllers_Application_gateway13_invoker = createInvoker(
+  private[this] lazy val controllers_Application_gateway14_invoker = createInvoker(
     Application_0.gateway(fakeValue[String]),
     HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -303,11 +321,11 @@ class Routes(
     )
   )
 
-  // @LINE:31
-  private[this] lazy val controllers_Application_gatewayPost14_route = Route("POST",
+  // @LINE:35
+  private[this] lazy val controllers_Application_gatewayPost15_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), DynamicPart("url", """.+""",false)))
   )
-  private[this] lazy val controllers_Application_gatewayPost14_invoker = createInvoker(
+  private[this] lazy val controllers_Application_gatewayPost15_invoker = createInvoker(
     Application_0.gatewayPost(fakeValue[String]),
     HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -401,16 +419,22 @@ class Routes(
         controllers_Assets_at12_invoker.call(Assets_1.at(path, file))
       }
   
-    // @LINE:29
-    case controllers_Application_gateway13_route(params) =>
-      call(params.fromPath[String]("url", None)) { (url) =>
-        controllers_Application_gateway13_invoker.call(Application_0.gateway(url))
+    // @LINE:27
+    case controllers_Assets_at13_route(params) =>
+      call(Param[String]("path", Right("/public")), Param[String]("file", Right("index.html"))) { (path, file) =>
+        controllers_Assets_at13_invoker.call(Assets_1.at(path, file))
       }
   
-    // @LINE:31
-    case controllers_Application_gatewayPost14_route(params) =>
+    // @LINE:33
+    case controllers_Application_gateway14_route(params) =>
       call(params.fromPath[String]("url", None)) { (url) =>
-        controllers_Application_gatewayPost14_invoker.call(Application_0.gatewayPost(url))
+        controllers_Application_gateway14_invoker.call(Application_0.gateway(url))
+      }
+  
+    // @LINE:35
+    case controllers_Application_gatewayPost15_route(params) =>
+      call(params.fromPath[String]("url", None)) { (url) =>
+        controllers_Application_gatewayPost15_invoker.call(Application_0.gatewayPost(url))
       }
   }
 }

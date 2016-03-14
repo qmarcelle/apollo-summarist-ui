@@ -1,7 +1,6 @@
 {
   "name": "apollo-login",
   "description": "Login Module for Apollo Platform",
-  "version": "0.1.6",
   "main": "./dist/apollo-login.js",
   "license": "MIT",
   "private": true,
@@ -40,7 +39,7 @@
   "resolutions": {
     "angular": "1.4.9"
   },
-  "homepage": "https://github.com/qmarcelle-elemica/apollo-login",
+  "homepage": "git@github.com:qmarcelle/apollo-ui.git",
   "authors": [
     "Qwynn Marcelle"
   ],
@@ -53,14 +52,14 @@
     "login",
     "gateway"
   ],
-  "_release": "0.1.6",
+  "_release": "73df0136f8",
   "_resolution": {
-    "type": "version",
-    "tag": "0.1.6",
-    "commit": "1924230e51fc1b2ff06bcce4e2ec4b4db9d15d08"
+    "type": "branch",
+    "branch": "master",
+    "commit": "73df0136f8263ebfb1403bd8ee5c749e99d227de"
   },
-  "_source": "https://github.com/qmarcelle-elemica/apollo-login.git",
-  "_target": "^0.1.6",
-  "_originalSource": "https://github.com/qmarcelle-elemica/apollo-login.git",
+  "_source": "git@github.com:elemica/apollo-commons-ui.git",
+  "_target": "*",
+  "_originalSource": "git@github.com:elemica/apollo-commons-ui.git",
   "_direct": true
 }

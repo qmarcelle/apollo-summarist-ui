@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Mon Mar 07 12:19:33 EST 2016
+// @DATE:Fri Mar 11 09:58:12 EST 2016
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -74,11 +74,15 @@ package controllers.javascript {
           }
         
           if (path == """ + implicitly[JavascriptLiteral[String]].to("/public") + """ && file == """ + implicitly[JavascriptLiteral[String]].to("index.html") + """) {
-            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "main_page"})
+            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "summarist"})
           }
         
           if (path == """ + implicitly[JavascriptLiteral[String]].to("/public") + """ && file == """ + implicitly[JavascriptLiteral[String]].to("index.html") + """) {
             return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "login"})
+          }
+        
+          if (path == """ + implicitly[JavascriptLiteral[String]].to("/public") + """ && file == """ + implicitly[JavascriptLiteral[String]].to("index.html") + """) {
+            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "login/"})
           }
         
         }
@@ -87,7 +91,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:29
+  // @LINE:33
   class ReverseApplication(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -95,7 +99,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:29
+    // @LINE:33
     def gateway: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.gateway",
       """
@@ -105,7 +109,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:31
+    // @LINE:35
     def gatewayPost: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.gatewayPost",
       """

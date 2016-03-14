@@ -6,7 +6,7 @@ module.exports = function(grunt){
     grunt.initConfig({
         jshint: {
             options:{
-                jshintrc: 'public/.jshintrc',
+                jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             }
         },

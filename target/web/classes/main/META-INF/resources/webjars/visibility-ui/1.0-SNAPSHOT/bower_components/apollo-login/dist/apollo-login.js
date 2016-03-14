@@ -6,28 +6,23 @@ var app = angular.module('apollo-login',['ui.router',
     'pascalprecht.translate',
     'translationLogin',
     'apollo-login.templates'])
-    .config( function($stateProvider) {
-        $stateProvider
-            .state('login', {
-                url:'/login/:bup',/*bup: boolean flag for bad username or password*/
-               /* templateUrl: '/views/login.html',*/
-              templateProvider: function($templateCache){
-                return $templateCache.get('views/login.html')
-              },
-                controller: 'LoginCtrl'
-            })
-    })
-
 
 
   .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider) {
+    //states
+    $stateProvider
+      .state('login', {
+        url:'/login/:bup',/*bup: boolean flag for bad username or password*/
+        templateProvider: function($templateCache){
+          return $templateCache.get('views/login.html')
+        },
+        controller: 'LoginCtrl'
+      });
     $urlRouterProvider
       .otherwise('/');
-
     $locationProvider.html5Mode(true);
-
-    //angular.extend(DSProvider.defaults, {});
-    //angular.extend(DSHttpAdapterProvider.defaults, {});
+    //push auth interceptor for token verification
+    $httpProvider.interceptors.push('authInterceptor')
 
   })
 
@@ -37,20 +32,12 @@ var app = angular.module('apollo-login',['ui.router',
     //redirect to login if auth token is not valid
     $rootScope.auth = Auth;
 
-    $rootScope.$state = $state;
+   // $rootScope.$state = $state;
 
     if(session.getAccessToken){
       $rootScope.auth_token = session.getAccessToken();
     }
 
-    user.getData(function(data){
-
-      $rootScope.username = data.username;
-//if the current user call can be made then return the current user to the main page
-      //if there is an error redirect to login
-    },function(e){
-      $state.go('login');
-    });
   });
 
 /**
@@ -114,16 +101,76 @@ $scope.state = $state.current;
       $scope.params = $stateParams;
     }]);
 
-/**
+/*
+/!**
  * Created by qmarcelle on 11/13/2015.
- */
+ *!/
+'use strict';
+
+
+describe('Testing login ', function() {
+
+  beforeEach(function() {
+    module('gatewayApp.loginApp');
+    /!*module("translationLogin", ['pascalprecht.translate']);
+     module(function($translateProvider) {
+     $translateProvider.translations('English', []);
+     })*!/
+  });
+
+
+  var loginService, $httpBackend, data;
+
+  beforeEach(inject(function($injector){
+
+    $httpBackend = $injector.get("$httpBackend");
+    loginService = $injector.get("loginService");
+
+    /!*spyOn(loginService, login).and.callFake(function() {
+     return {
+     success: function(callBack) { callBack({things: 'stuff'})}
+     };
+     });*!/
+  }));
+
+
+  it('login to company page if username and password is correct', function() {
+    $httpBackend.expectPOST('/login', {'username':"houni", 'password':'password'})
+      .respond('login');
+    loginService.login('houni', 'password').then(function(result) {
+      data = result.data;
+    });
+
+    $httpBackend.flush();
+    expect(data).toEqual('login');
+  });
+
+  it('should not login because of bad username', function() {
+    $httpBackend.expectPOST('/login', {'username': '', 'password': 'password'})
+      .respond({'username': ['This Field is required']});
+    loginService.login('', 'password').then(function(result) {
+      data = result.data;
+    });
+
+    $httpBackend.flush();
+    expect(data).toEqual({'username':["This Field is required"]});
+  });
+
+  afterEach(function() {
+    // make sure all requests where handled as expected.
+    $httpBackend.verifyNoOutstandingRequest();
+    $httpBackend.verifyNoOutstandingExpectation();
+  });
+
+});
+*/
 
 /**
  * Created by qmarcelle on 11/5/2015.
  */
 
 //Interceptor for store the token into header for all calls
-app.service('Auth',['$http', 'session','$state', '$location',function ($http, session,$state, $location){
+app.service('Auth',['$http', 'session','$state', '$location','$rootScope',function ($http, session,$state, $location,$rootScope){
     /**
      * Check whether the user is logged in
      * @returns boolean
@@ -152,12 +199,12 @@ app.service('Auth',['$http', 'session','$state', '$location',function ($http, se
             console.log("tried to post to login");
             //set the token variable
             token = session.getAccessToken();
-            /*/!*if ($rootScope.state) {
+            if ($rootScope.state) {
               $state.go($rootScope.state);
             } else {
-              $state.go('companies');
-            }*!/*/
-            $location.path('/supply_chain')
+              $state.go('summarist');
+            }
+           // $location.path('/supply_chain')
           }
           ///fix for locked account / bad login logic invalid credentials
           else if (response.data.success === false /*&& typeof response.data !== 'undefined' && typeof response.data.validationErrors == "undefined"*/) {
@@ -180,7 +227,42 @@ app.service('Auth',['$http', 'session','$state', '$location',function ($http, se
 
     };
 
-  }]);
+  }])
+
+//auth interceptor
+  .service("authInterceptor", function($q, $location) {
+    var service = this;
+    service.request = function(config) {
+      var access_token = localStorage.auth_token ? localStorage.auth_token.replace(/"/g,'') : null;
+      /*remove leading quotes and ending quotes from auth token*/
+
+      config.headers = config.headers || {};
+      if (access_token) {
+        config.headers['X-AUTH-TOKEN'] = access_token;
+      }
+      return config;
+    };
+    service.response = function(res) {
+      //check for errors
+      if(res.status === 401){
+        //redirect to login
+        $location.path('/login');
+        //remove any stale tokens
+        window.localStorage.removeItem('auth_token');
+        return $q.reject(res);
+      }
+      else if(res.status === 500){
+        //redirect to login
+        $location.path('/login');
+        //remove any stale tokens
+        window.localStorage.removeItem('auth_token');
+        return $q.reject(res);
+      }
+      else{
+        return res;
+      }
+    }
+  });
 
 
 /**
@@ -243,6 +325,8 @@ app.service('session',['$resource','user', function ($resource, user){
     this.destroy = function destroy(){
       this.setUser()
         .setAccessToken(null);
+      //log out of remote
+      $http.get('/logout');
       return this;
     };
 
@@ -252,86 +336,103 @@ app.service('session',['$resource','user', function ($resource, user){
  * Created by qmarcelle on 11/13/2015.
  */
 
-'use strict';
-
-//translateProvider to translate to different languages
 angular.module("translationLogin", ['pascalprecht.translate'])
-
   .config(['$translateProvider', function ($translateProvider) {
 
     $translateProvider.translations('English', {
-      "views.main.Username":'Username',
-      "views.main.Password": 'Password',
-      "directives.language-select.Language":'Language',
-      "views.main.cancel": "Cancel",
-      "en-option": "English",
-      "de-option": "German",
-      "ch-option": "Chinese",
-      "Login": "LOGIN",
-      "User-Enter": "Username",
-      "Pass-Enter": "Password",
-      "UserPassRequired": "Both Username and Password are required.",
-      "BadUser": "Bad Username or Password!",
-      "lang":'Language',
-      "title": "SUPPLY CHAIN OPERATING NETWORK",
-      "name": "Name",
-      "identifier": 'Identifier',
-      "idType": "Identifier Type",
-      "childCompany": "Child Company",
-      "edit": "Edit",
-      "findCompany": "Find Company",
-      "addCompany": "ADD COMPANY",
-      "parentComp": "Parent Company",
-      "saveChange": "Save",
-      "editComp": "Edit Company",
-      "listChildren": "List Children",
-      "reset": "Reset",
-      "refresh": "Refresh",
-      "policy": 'By clicking Login you accept the Elemica',
-      "paccept": "Privacy Policy",
-      "finduser": "Find User",
-      "adduser": "ADD USER",
-      "fname": "First Name",
-      "lname": "Last Name",
-      "email": "Email",
-      "phone": "Phone",
-      "llogin": "Last Login",
-      "locate": "Locate",
-      "home": "Home",
-      "comps": "Companies",
-      "users": "Users",
-      "products": "Products",
-      "edituser": "Edit User",
-      'confirmpass': "Confirm Password",
-      'itemPerPage': "Items per page",
-      'searchName': 'Search for Name',
-      'searchId': "Search for ID",
-      "searchUser": 'Search for User',
-      "compId": "Company",
-      'rolename': 'Role Name',
-      'companyRole': 'Company Roles',
-      'addRole': 'Add Role',
-      'noRoles': "There is no roles for this company",
-      'uRole': 'User Roles',
-      'add': 'ADD',
-      'Upload Product XReference': 'Upload Product XReference',
-      'Products XReference File': 'Products XReference File',
-      'findproduct': 'Find Product',
-      'addProduct': 'ADD PRODUCT',
-      'description': 'Description',
-      'editProduct': 'Edit Product',
-      'reference': 'XReferences',
-      'productId': 'Product Id',
-      'productName': 'Product Name',
-      'companyProducts': 'Company Products',
-      'bi': 'Bi Directional',
-      'uni': 'Uni Directional',
-      'addRef': 'Add Reference'
+        "views.main.Username":'Username',
+        "passwordTip": "Password Must contains at least one uppercase, one lowercase, one number, and one special character",
+        "views.main.Password": 'Password',
+        "directives.language-select.Language":'Language',
+        "views.main.cancel": "Cancel",
+        "en-option": "English",
+        "de-option": "German",
+        "ch-option": "Chinese",
+        "Login": "LOGIN",
+        "User-Enter": "Username",
+        "Pass-Enter": "Password",
+        "UserPassRequired": "Both Username and Password are required.",
+        "BadUser": "Invalid Username or Password!",
+        "lang":'Language',
+        "title": "SUPPLY CHAIN OPERATING NETWORK",
+        "forgotPassword": "Forgot Password!",
+        "loginBlock": "Login Block",
+        "oldPass": "Current Password",
+        "newPass": "New Password",
+        "changePass": "change Password",
+        "gobackLogin": "Go back to login",
+        "PASSWORD_TOO_SHORT": "Password must has atleast 8 character",
+        "PASSWORD_INSUFFICIENT_LOWERCASE": "Password must contain at least one lowercase",
+        "PASSWORD_INSUFFICIENT_UPPERCASE": "Password must contain at least one uppercase",
+        "PASSWORD_INSUFFICIENT_DIGIT": "Password must contain at least one digit",
+        "PASSWORD_INSUFFICIENT_SPECIAL": "Password must contain at least one special character",
+        "New password failed validation.": "New password failed validation.",
+        "Username or Password is wrong.": "Username or Password is wrong.",
+        "name": "Name",
+        "identifier": 'Identifier',
+        "idType": "Identifier Type",
+        "childCompany": "Child Company",
+        "edit": "Edit",
+        "findCompany": "Find Company",
+        "addCompany": "ADD COMPANY",
+        "parentComp": "Parent Company",
+        "saveChange": "Save",
+        "editComp": "Edit Company",
+        "listChildren": "List Children",
+        "reset": "Reset",
+        "refresh": "Refresh",
+        "policy": 'By clicking Login you accept the Elemica',
+        "paccept": "Privacy Policy",
+        "finduser": "Find User",
+        "adduser": "ADD USER",
+        "fname": "First Name",
+        "lname": "Last Name",
+        "email": "Email",
+        "phone": "Phone",
+        "llogin": "Last Login",
+        "locate": "Location",
+        "home": "Home",
+        "comps": "Companies",
+        "users": "Users",
+        "products": "Products",
+        "edituser": "Edit User",
+        'confirmpass': "Confirm Password",
+        'itemPerPage': "Items per page",
+        'searchName': 'Search for Name',
+        'searchCompany': 'Search for Company',
+        'searchId': "Search for ID",
+        "searchUser": 'Search for User',
+        "compId": "Company",
+        'rolename': 'Role Name',
+        'companyRole': 'Company Roles',
+        'userRoles': 'User Roles',
+        'addRole': 'Add Role',
+        'noRoles': "There is no role for this company",
+        'uRole': 'User Roles',
+        'add': 'ADD',
+        'deleteRole': 'Delete Role',
+        'Upload Product XReference': 'Upload Product XReference',
+        'Products XReference File': 'Products XReference File',
+        'findproduct': 'Find Product',
+        'searchProduct': 'Search for Product',
+        'addProduct': 'ADD PRODUCT',
+        'description': 'Description',
+        'editProduct': 'Edit Product',
+        'reference': 'Cross References',
+        'productId': 'Product Id',
+        'productName': 'Product Name',
+        'companyProducts': 'Company Products',
+        'bi': 'Bi Directional',
+        'uni': 'Uni Directional',
+        'addRef': 'Add Cross Reference',
+        "UserIdRequired": 'User Info Required',
+        'logout': 'Logout'
 
-    })
+      })
       .translations('German', {
         "views.main.Username":'Benutzername',
         "views.main.Password": 'Passwort',
+        "passwordTip": "Das Passwort muss mindestens einen Großbuchstaben , einen Klein, eine Zahl und ein Sonderzeichen",
         "directives.language-select.Language":'Sprache',
         "views.main.cancel": "stornieren",
         "de-option": "deutsch",
@@ -341,9 +442,22 @@ angular.module("translationLogin", ['pascalprecht.translate'])
         "User-Enter": "Benutzername",
         "Pass-Enter": "Passwort",
         "UserPassRequired": "Sowohl Benutzername und Kennwort erforderlich.",
-        "BadUser": "Bad Benutzername oder Passwort!",
+        "BadUser": "Ungültiger Benutzername oder Passwort!",
         "lang": "Sprache",
         "title": "Supply-Chain-Netzwerkbetriebs",
+        "forgotPassword": "Passwort vergessen!",
+        "loginBlock": "Login Blocken",
+        "oldPass": "Aktuelles Passwort",
+        "newPass": "Neues Passwort",
+        "changePass": "Passwort ändern",
+        "gobackLogin": "Zurück zum Login",
+        "PASSWORD_TOO_SHORT": "Passwort ist zu kurz",
+        "PASSWORD_INSUFFICIENT_LOWERCASE": "Das Passwort muss mindestens einen Klein enthalten",
+        "PASSWORD_INSUFFICIENT_UPPERCASE": "Das Passwort muss mindestens einen Groß enthalten",
+        "PASSWORD_INSUFFICIENT_DIGIT": "Das Passwort muss mindestens eine Ziffer enthalten",
+        "PASSWORD_INSUFFICIENT_SPECIAL": "Das Passwort muss mindestens ein Sonderzeichen enthalten",
+        "New password failed validation.": "Neues Passwort Überprüfung fehlgeschlagen.",
+        "Username or Password is wrong.": "Benutzername oder Passwort sind falsch.",
         "name": "Name",
         "identifier": "Kennung",
         "idType": "Kennung Typ",
@@ -375,32 +489,39 @@ angular.module("translationLogin", ['pascalprecht.translate'])
         "confirmpass": "Passwort bestätigen",
         'itemPerPage': "Artikel pro Seite",
         'searchName': 'Suche nach Namen',
+        'searchCompany': 'Suche nach Unternehmen',
         'searchId': "Suche nach ID",
         'searchUser': 'Suche nach Benutzer',
         'compId': 'Unternehmen',
         'rolename': 'Rolle Name',
         'companyRole': 'Firma Rolle',
+        'userRoles': 'Benutzerrollen',
         'addRole': 'fügen Rolle',
         'noRoles': 'Es gibt keine Rollen für dieses Unternehmen',
         'uRole': 'Benutzerrollen',
         'add': 'HINZUFÜGEN',
+        'deleteRole': 'Rolle löschen',
         'Upload Product XReference': 'Produkt hochladen',
         'Products XReference File': 'Upload Artikel Datei',
         'findproduct': 'Finden Sie Produkt',
+        'searchProduct': 'Suche nach Produkt',
         'addProduct': 'Produkt hinzufügen',
         'description': 'Bezeichnung',
         'editProduct': 'Produkt bearbeiten',
-        'reference': 'Hinweis',
+        'reference': 'Querverweis',
         'productId': 'Produkt ID',
         'productName': 'Produktname',
         'companyProducts': 'Unternehmen Produkte',
         'bi': 'Richtungs-bi',
         'uni': 'Richtungs-uni',
-        'addRef': 'Verweis hinzufügen'
+        'addRef': 'Verweis hinzufügen',
+        "UserIdRequired": 'User Info Erforderlich',
+        'logout': 'abmelden'
       })
       .translations('Chinese', {
         "views.main.Username":'用户名',
         "views.main.Password": '密码',
+        "passwordTip": "密码必须包含至少一个大写，一个小写，一个数字和一个特殊字符",
         "directives.language-select.Language":'语言',
         "views.main.cancel": "取消",
         "en-option": "英语",
@@ -410,9 +531,22 @@ angular.module("translationLogin", ['pascalprecht.translate'])
         "User-Enter": '输入用户名',
         "Pass-Enter": "输入密码",
         "UserPassRequired": "这两个用户名和密码是必需的.",
-        "BadUser": "错误的用户名或密码！",
+        "BadUser": "无效的用户名或密码！",
         "lang":'语言',
         "title": "供应链运营网络",
+        "forgotPassword": "忘了密码！",
+        "loginBlock": "登录块",
+        "oldPass": "当前密码",
+        "newPass": "新密码",
+        "changePass": "更改密码",
+        "gobackLogin": "返回首页",
+        "PASSWORD_TOO_SHORT": "密码太短",
+        "PASSWORD_INSUFFICIENT_LOWERCASE": "密码必须包含至少一个小写",
+        "PASSWORD_INSUFFICIENT_UPPERCASE": "密码必须包含至少一个大写",
+        "PASSWORD_INSUFFICIENT_DIGIT": "密码必须包含至少一个数字",
+        "PASSWORD_INSUFFICIENT_SPECIAL": "密码必须包含至少一个特殊字符",
+        "New password failed validation.": "新密码验证失败。",
+        "Username or Password is wrong.": "用户名或密码错误。",
         "name": "名字",
         "identifier": "识别码",
         "idType": "标识符类型",
@@ -444,28 +578,34 @@ angular.module("translationLogin", ['pascalprecht.translate'])
         'confirmpass': "确认密码",
         'itemPerPage': '每页项目',
         'searchName': '搜索名称',
+        'searchCompany': '搜索公司',
         'searchId': "搜索鉴定",
         'searchUser': '搜索用户',
         'compId': '公司标识',
         'rolename': '角色名称',
         'companyRole': '公司角色',
+        'userRoles': '用户角色',
         'addRole': '添加角色',
         'noRoles': '目前这家公司的任何角色',
         'uRole': '用户角色',
         'add': '加',
+        'deleteRole': '删除角色',
         'Upload Product XReference': '上传产品',
         'Products XReference File': '上传产品文件',
         'findproduct': '查找产品',
+        'searchProduct': '搜索产品',
         'addProduct': '添加产品',
         'description': '描写',
         'editProduct': '编辑产品',
-        'reference': '参考',
+        'reference': '交叉参考',
         'productId': '产品编号',
         'productName': '产品名',
         'companyProducts': '公司产品',
         'bi': '双定向',
         'uni': '单向的，',
-        'addRef': '添加引用'
+        'addRef': '添加引用',
+        "UserIdRequired": '用户信息要求',
+        'logout': '登出'
 
       });
     //$translateProvider.useLocalStorage();
@@ -491,7 +631,6 @@ angular.module('views/login.html', []).run(['$templateCache', function($template
   'use strict';
   $templateCache.put('views/login.html',
     '<style>body {\n' +
-    '\n' +
     '    background: #25aae1 -webkit-image-set(url("/app/images/login-background-1x.png") 1x,url("/app/images/login-background-2x.png") 2x) no-repeat;\n' +
     '    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;}\n' +
     '  #navContainer { display: none;\n' +

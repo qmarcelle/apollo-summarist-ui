@@ -8,6 +8,7 @@
     'apollo-login',
     'ui.router',
     'ngResource',
+    'ngTable',
     'ngSanitize',
     'ngAnimate'
   ])
@@ -26,7 +27,6 @@
   //app run state
   .run(function($rootScope, $location, $state, $injector, $http, $window, user){
     //redirect to login if auth token is not valid
-
 
     $rootScope.state = 'summarist';
     //upon launch of the app determine if user already has appropriate credentials

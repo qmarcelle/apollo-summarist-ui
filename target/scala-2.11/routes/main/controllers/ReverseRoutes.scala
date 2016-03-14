@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Mon Mar 07 12:19:33 EST 2016
+// @DATE:Fri Mar 11 09:58:12 EST 2016
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -71,20 +71,20 @@ package controllers {
   
   }
 
-  // @LINE:29
+  // @LINE:33
   class ReverseApplication(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:29
+    // @LINE:33
     def gateway(url:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + implicitly[PathBindable[String]].unbind("url", url))
     }
   
-    // @LINE:31
+    // @LINE:35
     def gatewayPost(url:String): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + implicitly[PathBindable[String]].unbind("url", url))

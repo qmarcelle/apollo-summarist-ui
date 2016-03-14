@@ -22,8 +22,12 @@ GET         /css/*file    controllers.Assets.at(path="/public/css", file)
 #all possible views route to index.html to allow angular to handle the routing
 GET         /           controllers.Assets.at(path="/public", file="index.html")
 GET         /index.html        controllers.Assets.at(path="/public", file="index.html")
-GET         /main_page       controllers.Assets.at(path="/public", file="index.html")
+GET         /summarist       controllers.Assets.at(path="/public", file="index.html")
 GET         /login        controllers.Assets.at(path="/public", file="index.html")
+GET         /login/        controllers.Assets.at(path="/public", file="index.html")
+
+
+
 
 
 GET        /*url                controllers.Application.gateway(url)

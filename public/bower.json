@@ -33,10 +33,14 @@
     "angular-sanitize": "~1.4.7",
     "angular-local-storage": "~0.2.3",
     "angular-animate": "~1.4.8",
-    "ng-table": "^0.8.3"
+    "ng-table": "^0.8.3",
+    "apollo-commons-ui":"git@github.com:elemica/apollo-commons-ui.git"
   },
   "devDependencies": {
     "jasmine-core": "jasmine#~2.3.4",
     "angular-mocks": "~1.4.7"
+  },
+  "resolutions": {
+    "apollo-login": "^0.2.0"
   }
 }

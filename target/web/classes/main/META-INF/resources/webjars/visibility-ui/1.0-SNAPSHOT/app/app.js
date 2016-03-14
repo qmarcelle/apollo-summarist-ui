@@ -8,61 +8,37 @@
     'apollo-login',
     'ui.router',
     'ngResource',
+    'ngTable',
     'ngSanitize',
     'ngAnimate'
   ])
   //authentication
-  .service("authInterceptor", function($q, $location) {
-    var service = this;
-    service.request = function(config) {
-      var access_token = localStorage.auth_token ? localStorage.auth_token.replace(/"/g,'') : null;
-      /*remove leading quotes and ending quotes from auth token*/
-
-      config.headers = config.headers || {};
-      if (access_token) {
-        config.headers['X-AUTH-TOKEN'] = access_token;
-      }
-      return config;
-    };
-    service.response = function(res) {
-      //check for errors
-      if(res.status === 401){
-        //redirect to login
-        $location.path('/login');
-        //remove any stale tokens
-        window.localStorage.removeItem('auth_token');
-        return $q.reject(res);
-      }
-      else if(res.status === 500){
-        //redirect to login
-        $location.path('/login');
-        //remove any stale tokens
-        window.localStorage.removeItem('auth_token');
-        return $q.reject(res);
-      }
-      else{
-        return res;
-      }
-    }
-  })
-
 
   .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider) {
     $urlRouterProvider
       .otherwise('/');
     $locationProvider.html5Mode(true);
 
-    $httpProvider.interceptors.push('authInterceptor')
+
 
   })
 
 
   //app run state
-  .run(function($rootScope, $location, $state, $injector, $http, $window){
+  .run(function($rootScope, $location, $state, $injector, $http, $window, user){
     //redirect to login if auth token is not valid
 
+    $rootScope.state = 'summarist';
+    //upon launch of the app determine if user already has appropriate credentials
+    user.getData(function(data){
+      $rootScope.username = data.username;
+    //if the current user call can be made then return the current user to the main page
+      $state.go( $rootScope.state);
+      //if there is an error redirect to login
+    },function(e){
+      $state.go('login');
+    });
 
-    $rootScope.$state = $state;
 
 
   });

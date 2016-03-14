@@ -54,6 +54,8 @@ app.service('session',['$resource','user', function ($resource, user){
     this.destroy = function destroy(){
       this.setUser()
         .setAccessToken(null);
+      //log out of remote
+      $http.get('/logout');
       return this;
     };
 

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Mon Mar 07 12:19:33 EST 2016
+// @DATE:Fri Mar 11 09:58:12 EST 2016
 
 package controllers;
 

@@ -6,28 +6,23 @@ var app = angular.module('apollo-login',['ui.router',
     'pascalprecht.translate',
     'translationLogin',
     'apollo-login.templates'])
-    .config( function($stateProvider) {
-        $stateProvider
-            .state('login', {
-                url:'/login/:bup',/*bup: boolean flag for bad username or password*/
-               /* templateUrl: '/views/login.html',*/
-              templateProvider: function($templateCache){
-                return $templateCache.get('views/login.html')
-              },
-                controller: 'LoginCtrl'
-            })
-    })
-
 
 
   .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider) {
+    //states
+    $stateProvider
+      .state('login', {
+        url:'/login/:bup',/*bup: boolean flag for bad username or password*/
+        templateProvider: function($templateCache){
+          return $templateCache.get('views/login.html')
+        },
+        controller: 'LoginCtrl'
+      });
     $urlRouterProvider
       .otherwise('/');
-
     $locationProvider.html5Mode(true);
-
-    //angular.extend(DSProvider.defaults, {});
-    //angular.extend(DSHttpAdapterProvider.defaults, {});
+    //push auth interceptor for token verification
+    $httpProvider.interceptors.push('authInterceptor')
 
   })
 
@@ -37,18 +32,10 @@ var app = angular.module('apollo-login',['ui.router',
     //redirect to login if auth token is not valid
     $rootScope.auth = Auth;
 
-    $rootScope.$state = $state;
+   // $rootScope.$state = $state;
 
     if(session.getAccessToken){
       $rootScope.auth_token = session.getAccessToken();
     }
 
-    user.getData(function(data){
-
-      $rootScope.username = data.username;
-//if the current user call can be made then return the current user to the main page
-      //if there is an error redirect to login
-    },function(e){
-      $state.go('login');
-    });
   });
