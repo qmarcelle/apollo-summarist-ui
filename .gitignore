@@ -1,11 +1,10 @@
 # Ignore Play! working directory #
-#bin/
+bin/
 /db
 .eclipse
 /lib/
 /logs/
 /modules
-/project/project
 /project/target
 /target
 tmp/
@@ -53,3 +52,6 @@ build/Release
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
+*.eml
+/dist/
+.cache
