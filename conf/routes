@@ -12,8 +12,6 @@ GET         /components/auth/*file    controllers.Assets.at(path="/public/compon
 
 GET         /components/navbar/*file    controllers.Assets.at(path="/public/components/navbar/", file)
 
-GET         /css/*file    controllers.Assets.at(path="/public/css", file)
-
 GET         /bower_components/*file    controllers.Assets.at(path="/public/bower_components", file)
 GET         /app/*file    controllers.Assets.at(path="/public/app", file)
 GET         /css/*file    controllers.Assets.at(path="/public/css", file)
