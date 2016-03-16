@@ -27,8 +27,8 @@ module.exports = function(grunt){
                     require: 'susy'
                 },
                 files :[{
-                    src: 'public/sass/main.scss',
-                    dest: 'public/css/style.css'
+                    src: 'sass/main.scss',
+                    dest: 'css/style.css'
                 }]
             }
         },//sass
@@ -105,7 +105,7 @@ module.exports = function(grunt){
         'karma'
     ]);
 
-    
+
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-sass');

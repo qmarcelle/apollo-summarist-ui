@@ -1,0 +1,39 @@
+// Modules and Variables
+@import "partials/base";
+@import "modules/color";
+@import "modules/shiplist";
+@import "partials/variables";
+@import "modules/sidebar";
+@import "modules/navbar";
+@import "modules/mapview";
+//is below needed?
+/*@import "../bower_components/angular-material/angular-material.scss";*/
+
+// Partials
+@import "partials/reset";
+@import "partials/typography";
+@import "partials/buttons";
+@import "partials/figures";
+@import "partials/grids";
+//
+
+// Third-party
+
+@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+
+//susy
+@import "../bower_components/susy/sass/susy";
+
+
+
+body{
+  background-color:  $primary-gray-5;
+  //height: 100%;
+}
+
+
+/*
+html{
+  height: 100%;
+}*/
