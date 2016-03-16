@@ -22,11 +22,11 @@ app.config(function($stateProvider){
       $scope.messagesTable.reload();
       if ($scope.filter.$.length > 0) {
         if (currentPage === null) {
-          currentPage = $scope.tableParams.page;
+          currentPage = $scope.messagesTable.page;
         }
-        $scope.tableParams.page(1);
+        $scope.messagesTable.page(1);
       }else {
-        $scope.tableParams.page(currentPage);
+        $scope.messagesTable.page(currentPage);
         currentPage = null;
       }
     });

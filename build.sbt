@@ -5,8 +5,8 @@ import Grunt._
 import com.typesafe.sbt.packager.MappingsHelper._
 import play.PlayImport.PlayKeys.playRunHooks
 import com.typesafe.sbt.packager.docker._
-playRunHooks <+= baseDirectory.map(base => Grunt(base))
-name := """visibility-ui"""
+playRunHooks <+= baseDirectory.map(base => Grunt(new File (base,"public")))
+name := """summarist-ui"""
 
 version := "1.0-SNAPSHOT"
 
