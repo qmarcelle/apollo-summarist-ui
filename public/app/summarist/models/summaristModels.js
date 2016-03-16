@@ -5,7 +5,7 @@
 //message endpoint
   app.factory('messageFactory',
     function($resource) {
-      return $resource('messaging/api/v1/fakedata?dunsNumber=004172565&from=2015-01-01T00:00:01.000Z&to=2015-10-31T23:59:05.000Z');
+      return $resource('summarist/api/v1/fakedata');
     })
 
 

@@ -19,6 +19,7 @@ app.config(function($stateProvider){
 
 
     $scope.$watch("filter.$", function () {
+      //var currentPage;
       $scope.messagesTable.reload();
       if ($scope.filter.$.length > 0) {
         if (currentPage === null) {
@@ -27,7 +28,7 @@ app.config(function($stateProvider){
         $scope.messagesTable.page(1);
       }else {
         $scope.messagesTable.page(currentPage);
-        currentPage = null;
+       var currentPage = null;
       }
     });
 

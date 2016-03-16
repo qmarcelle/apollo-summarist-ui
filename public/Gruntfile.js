@@ -4,7 +4,7 @@ module.exports = function(grunt){
     grunt.initConfig({
         jshint: {
             options:{
-                jshintrc: 'public/.jshintrc',
+                jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             }
         },
@@ -12,9 +12,9 @@ module.exports = function(grunt){
 
         concat : {
             dist : {
-                src : ['public/app/components/version/*.js',
-                        'public/app/**/*.js'],
-                dest:  'public/js/site.js'
+                src : ['app/components/version/*.js',
+                        'app/**/*.js'],
+                dest:  'js/site.js'
                 //remeber to somehow exclude test from distribution
 
             }
@@ -33,7 +33,7 @@ module.exports = function(grunt){
             }
         },//sass
         wiredep: {
-            task:{ src:'public/index.html',options: {
+            task:{ src:'index.html',options: {
                 cwd: 'public'
             } }
         } ,//wiredep
@@ -81,8 +81,8 @@ module.exports = function(grunt){
         },//karma
         bower_concat:{
             all:{
-                dest:'public/js/_bower.js'
-                ,cssDest:'public/css/_bower.css'
+                dest:'js/_bower.js'
+                ,cssDest:'css/_bower.css'
             }
         },//bower_concat
 
