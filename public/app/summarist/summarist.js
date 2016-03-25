@@ -12,28 +12,11 @@ app.config(function($stateProvider){
         authenticate: true
       })
   })
-  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter) {
+  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter, messageFactory) {
 
-    $scope.messages = dummyMessageFactory.getMessages();
-
-
-
-    $scope.$watch("filter.$", function () {
-      //var currentPage;
-      $scope.messagesTable.reload();
-      if ($scope.filter.$.length > 0) {
-        if (currentPage === null) {
-          currentPage = $scope.messagesTable.page;
-        }
-        $scope.messagesTable.page(1);
-      }else {
-        $scope.messagesTable.page(currentPage);
-       var currentPage = null;
-      }
-    });
-
-
-
+    /*mocked local data*/
+   /* $scope.messages = dummyMessageFactory.getMessages();
+    //local mocked table
     $scope.messagesTable = new NgTableParams({
       page:1, //show first page
       count:10 //count per page
@@ -50,5 +33,32 @@ app.config(function($stateProvider){
     },
     $scope: $scope
     });
+
+    $scope.$watch("filter.$", function () {
+      //var currentPage;
+      $scope.messagesTable.reload();
+      if ($scope.filter.$.length > 0) {
+        if (currentPage === null) {
+          currentPage = $scope.messagesTable.page;
+        }
+        $scope.messagesTable.page(1);
+      }else {
+        $scope.messagesTable.page(currentPage);
+        var currentPage = null;
+      }
+    });*/
+
+
+//remote messagesTable
+   $scope.messagesTable = new NgTableParams({},{
+      getData: function(params){
+        //ajax request to api
+        return messageFactory.get(params.url()).$promise.then(function(data){
+          params.total(data.inlineCount); //recalc page nav controls
+          return data.ubds;
+        })
+      }
+    });
+
 
   });

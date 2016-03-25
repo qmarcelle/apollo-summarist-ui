@@ -10,11 +10,16 @@
     'ngResource',
     'ngTable',
     'ngSanitize',
-    'ngAnimate'
+    'ngAnimate',
+   'js-data'
   ])
   //authentication
 
-  .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider) {
+  .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider,DSProvider, DSHttpAdapterProvider) {
+    angular.extend(DSProvider.defaults, {});
+    angular.extend(DSHttpAdapterProvider.defaults, {});
+
+
     $urlRouterProvider
       .otherwise('/');
     $locationProvider.html5Mode(true);
@@ -25,8 +30,11 @@
 
 
   //app run state
-  .run(function($rootScope, $location, $state, $injector, $http, $window, user){
+  .run(function($rootScope, $location, $state, $injector, $http, $window, user,DS){
     //redirect to login if auth token is not valid
+
+
+
 
     $rootScope.state = 'summarist';
     //upon launch of the app determine if user already has appropriate credentials
@@ -54,7 +62,7 @@
 //message endpoint
   app.factory('messageFactory',
     function($resource) {
-      return $resource('messaging/api/v1/fakedata?dunsNumber=004172565&from=2015-01-01T00:00:01.000Z&to=2015-10-31T23:59:05.000Z');
+      return $resource('summarist/api/v1/fakedata');
     })
 
 
@@ -1109,27 +1117,11 @@ app.config(function($stateProvider){
         authenticate: true
       })
   })
-  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter) {
+  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter, messageFactory) {
 
-    $scope.messages = dummyMessageFactory.getMessages();
-
-
-
-    $scope.$watch("filter.$", function () {
-      $scope.messagesTable.reload();
-      if ($scope.filter.$.length > 0) {
-        if (currentPage === null) {
-          currentPage = $scope.tableParams.page;
-        }
-        $scope.tableParams.page(1);
-      }else {
-        $scope.tableParams.page(currentPage);
-        currentPage = null;
-      }
-    });
-
-
-
+    /*mocked local data*/
+   /* $scope.messages = dummyMessageFactory.getMessages();
+    //local mocked table
     $scope.messagesTable = new NgTableParams({
       page:1, //show first page
       count:10 //count per page
@@ -1146,5 +1138,32 @@ app.config(function($stateProvider){
     },
     $scope: $scope
     });
+
+    $scope.$watch("filter.$", function () {
+      //var currentPage;
+      $scope.messagesTable.reload();
+      if ($scope.filter.$.length > 0) {
+        if (currentPage === null) {
+          currentPage = $scope.messagesTable.page;
+        }
+        $scope.messagesTable.page(1);
+      }else {
+        $scope.messagesTable.page(currentPage);
+        var currentPage = null;
+      }
+    });*/
+
+
+//remote messagesTable
+   $scope.messagesTable = new NgTableParams({},{
+      getData: function(params){
+        //ajax request to api
+        return messageFactory.get(params.url()).$promise.then(function(data){
+          params.total(data.inlineCount); //recalc page nav controls
+          return data.ubds;
+        })
+      }
+    });
+
 
   });

@@ -34,7 +34,7 @@ module.exports = function(grunt){
         },//sass
         wiredep: {
             task:{ src:'index.html',options: {
-                cwd: 'public'
+                //cwd: 'public'
             } }
         } ,//wiredep
         karma:{
@@ -81,6 +81,9 @@ module.exports = function(grunt){
         },//karma
         bower_concat:{
             all:{
+              mainFiles:{
+                'susy':'bower_components/susy/'
+              },
                 dest:'js/_bower.js'
                 ,cssDest:'css/_bower.css'
             }

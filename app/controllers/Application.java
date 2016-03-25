@@ -91,6 +91,8 @@ public class Application extends Controller {
         }
         if ( entries != null){
              Logger.debug(entries.toString());
+            System.out.println(call.post(entries.toString()));
+            //System.out.println(entries.toString().asJson());
              return call.post(entries.toString()).map(response -> ok(response.asJson()));
         }else{
             return Promise.promise(() -> badRequest("Expecting Json data"));}

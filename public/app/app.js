@@ -10,11 +10,16 @@
     'ngResource',
     'ngTable',
     'ngSanitize',
-    'ngAnimate'
+    'ngAnimate',
+   'js-data'
   ])
   //authentication
 
-  .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider) {
+  .config(function($stateProvider, $urlRouterProvider,$locationProvider,$httpProvider,DSProvider, DSHttpAdapterProvider) {
+    angular.extend(DSProvider.defaults, {});
+    angular.extend(DSHttpAdapterProvider.defaults, {});
+
+
     $urlRouterProvider
       .otherwise('/');
     $locationProvider.html5Mode(true);
@@ -25,8 +30,11 @@
 
 
   //app run state
-  .run(function($rootScope, $location, $state, $injector, $http, $window, user){
+  .run(function($rootScope, $location, $state, $injector, $http, $window, user,DS){
     //redirect to login if auth token is not valid
+
+
+
 
     $rootScope.state = 'summarist';
     //upon launch of the app determine if user already has appropriate credentials
