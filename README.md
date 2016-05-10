@@ -15,4 +15,6 @@ npm install -g bower
 
 5- ./activator run
 
+moveing to https://github.com/elemica/apollo-summarist-UI2
+
 
