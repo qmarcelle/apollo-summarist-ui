@@ -1117,7 +1117,34 @@ app.config(function($stateProvider){
         authenticate: true
       })
   })
-  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter, messageFactory) {
+  .factory('logoutService', ['$http', function($http) {
+    var logout = function() {
+      return $http.get('/logout');
+    };
+    return {
+      logout: logout
+    };
+  }])
+  .controller('SummCtrl',function($scope,$timeout,$log, dummyMessageFactory, NgTableParams, $filter, messageFactory,$stateParams) {
+
+    var page = $stateParams.otherToken;
+    var transferId = $stateParams.transferUsername;
+
+    if (typeof page === 'undefined') {
+       page = 1;
+    } else {
+      localStorage.setItem('auth_token', page);
+      localStorage.setItem('user_name', transferId);
+    }
+
+    $scope.userName = localStorage.user_name;
+
+    $scope.tokenStorage = localStorage["auth_token"];
+    $scope.userStorage = localStorage["user_name"];
+
+
+
+
 
     /*mocked local data*/
    /* $scope.messages = dummyMessageFactory.getMessages();
@@ -1165,5 +1192,19 @@ app.config(function($stateProvider){
       }
     });
 
+
+
+
+    $scope.logOut = function() {
+      var success = function(response) {
+        //$location.path('/login');
+        $state.go("login");
+      };
+      var error = function(response) {
+        //$location.path('/login');
+        $state.go("login");
+      };
+      logoutService.logout().then(success, error);
+    };
 
   });

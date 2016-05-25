@@ -17,7 +17,8 @@ app.service('session',['$resource','user', function ($resource, user){
 // Instantiate data when service
     // is loaded
     this._user = JSON.parse(localStorage.getItem('user'));
-    this._accessToken = JSON.parse(localStorage.getItem('auth_token'));
+    this._accessToken = localStorage.getItem('auth_token');
+
 
     this.getUser = function(){
       return  this._user;
@@ -46,8 +47,9 @@ app.service('session',['$resource','user', function ($resource, user){
     };
 
     this.setAccessToken = function(token){
-      this._accessToken = angular.toJson(token);
-      localStorage['auth_token'] = angular.toJson(token);
+      this._accessToken = token;//angular.toJson(token);
+      localStorage.setItem('auth_token',token);
+
       return this;
     };
 

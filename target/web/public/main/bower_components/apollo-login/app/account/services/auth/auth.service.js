@@ -27,7 +27,7 @@ app.service('Auth',['$http', 'session','$state', '$location','$rootScope',functi
         .then(function(response){
           if(response.data.authToken){//if the user logged in successfully
             var data = response.data;
-            session.setAccessToken(data.authToken);
+            session.setAccessToken(data['authToken']);
             //session.setInvalid(false);
             console.log("tried to post to login");
             //set the token variable
@@ -66,8 +66,8 @@ app.service('Auth',['$http', 'session','$state', '$location','$rootScope',functi
   .service("authInterceptor", function($q, $location) {
     var service = this;
     service.request = function(config) {
-      var access_token = localStorage.auth_token ? localStorage.auth_token.replace(/"/g,'') : null;
-      /*remove leading quotes and ending quotes from auth token*/
+      var access_token = localStorage.auth_token ? localStorage.auth_token : null;
+
 
       config.headers = config.headers || {};
       if (access_token) {

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Fri Mar 11 09:58:12 EST 2016
+// @DATE:Mon Mar 28 09:05:10 EDT 2016
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -51,16 +51,16 @@ package controllers {
           Call("GET", _prefix + { _defaultPrefix } + "components/navbar/" + implicitly[PathBindable[String]].unbind("file", file))
       
         // @LINE:15
-        case (path, file) if path == "/public/css" =>
-          implicit val _rrc = new ReverseRouteContext(Map(("path", "/public/css")))
-          Call("GET", _prefix + { _defaultPrefix } + "css/" + implicitly[PathBindable[String]].unbind("file", file))
-      
-        // @LINE:17
         case (path, file) if path == "/public/bower_components" =>
           implicit val _rrc = new ReverseRouteContext(Map(("path", "/public/bower_components")))
           Call("GET", _prefix + { _defaultPrefix } + "bower_components/" + implicitly[PathBindable[String]].unbind("file", file))
       
-        // @LINE:23
+        // @LINE:17
+        case (path, file) if path == "/public/css" =>
+          implicit val _rrc = new ReverseRouteContext(Map(("path", "/public/css")))
+          Call("GET", _prefix + { _defaultPrefix } + "css/" + implicitly[PathBindable[String]].unbind("file", file))
+      
+        // @LINE:21
         case (path, file) if path == "/public" && file == "index.html" =>
           implicit val _rrc = new ReverseRouteContext(Map(("path", "/public"), ("file", "index.html")))
           Call("GET", _prefix)
@@ -71,20 +71,20 @@ package controllers {
   
   }
 
-  // @LINE:33
+  // @LINE:31
   class ReverseApplication(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:33
+    // @LINE:31
     def gateway(url:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + implicitly[PathBindable[String]].unbind("url", url))
     }
   
-    // @LINE:35
+    // @LINE:33
     def gatewayPost(url:String): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + implicitly[PathBindable[String]].unbind("url", url))

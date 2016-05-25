@@ -1,7 +1,8 @@
 {
   "name": "apollo-login",
   "description": "Login Module for Apollo Platform",
-  "version": "0.0.1-ALPHA",
+  "version": "0.0.5-ALPHA",
+
   "main": "./dist/apollo-login.js",
   "license": "MIT",
   "private": true,
@@ -40,7 +41,7 @@
   "resolutions": {
     "angular": "1.4.9"
   },
-  "homepage": "git@github.com:qmarcelle/apollo-ui.git",
+  "homepage": "git@github.com:elemica/apollo-commons-ui.git",
   "authors": [
     "Qwynn Marcelle"
   ],

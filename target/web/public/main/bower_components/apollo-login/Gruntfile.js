@@ -20,6 +20,7 @@ module.exports = function(grunt){
                 '\'ngResource\',' +
                 '\'ngSanitize\',' +
                 '\'ngAnimate\',' +
+                '\'auth\',' +
                 '\'md.data.table\',' +
                 '\'myApp.version\',' +
                 '\'pascalprecht.translate\',' +
@@ -27,7 +28,7 @@ module.exports = function(grunt){
                 '\'apollo-login.templates\']);'
           },
             dist : {
-                src : ['./app/account/**/*.js'],
+                src : ['./app/account/**/*.js','./app/services/*.js'],
                 dest:  './dist/apollo-login.js'
                 //remeber to somehow exclude test from distribution
 

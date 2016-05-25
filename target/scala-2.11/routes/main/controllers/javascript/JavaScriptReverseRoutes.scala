@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:C:/Users/qmarcelle/Documents/GitHub/elemica projects/apollo-summarist-ui/conf/routes
-// @DATE:Fri Mar 11 09:58:12 EST 2016
+// @DATE:Mon Mar 28 09:05:10 EDT 2016
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -49,10 +49,6 @@ package controllers.javascript {
             return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "components/navbar/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file)})
           }
         
-          if (path == """ + implicitly[JavascriptLiteral[String]].to("/public/css") + """) {
-            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "css/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file)})
-          }
-        
           if (path == """ + implicitly[JavascriptLiteral[String]].to("/public/bower_components") + """) {
             return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "bower_components/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file)})
           }
@@ -91,7 +87,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:33
+  // @LINE:31
   class ReverseApplication(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -99,7 +95,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:33
+    // @LINE:31
     def gateway: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.gateway",
       """
@@ -109,7 +105,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:35
+    // @LINE:33
     def gatewayPost: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.gatewayPost",
       """

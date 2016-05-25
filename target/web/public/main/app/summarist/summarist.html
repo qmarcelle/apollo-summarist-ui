@@ -1,4 +1,63 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<!--<div ng-include="'components/navbar/navbar.html'"></div>-->
+<div id="navbarHead">
+  <button class="fa fa-th-large" ng-click="isCollapsed = !isCollapsed" type="button" id="adminIcon"></button>
+  <div id="collapseHead" uib-collapse="!isCollapsed">
+    <div class="row">
+      <div  class="col-md-4">
+        <ul class="" id="headDropdown">
+          <li id="listHead">{{'Application' | translate }}</li>
+          <!--<li id="serviceListTop"><a id="otherAppLink" href="http://127.0.0.1:8080/vrui/app/index.html#/token/{{tokenStorage}}/{{userStorage}}">{{ 'visibility-risk' | translate }}</a></li>-->
+
+          <li id="serviceListTop"><a id="otherAppLink" href="http://apollodevvisriskui-env.eu-west-1.elasticbeanstalk.com/vrui/app/index.html#/token/{{tokenStorage}}/{{userStorage}}">{{ 'visibility-risk' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="" id="headDropdown">
+          <li id="listHead">{{ 'Network' | translate }}</li>
+          <li id="serviceListTop"><a id="otherAppLink" href="http://network.elemica.com">Elemica</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-inverse" id="navContainer">
+  <div class="container-fluid" id="headList">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#example-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <img alt="Elemica Logo" class="navbar-brand" id='elemicaLogo' src="/public/app/images/webDL-ElemicaLogo-W.png" />
+    </div><!--navbar-header-->
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+
+
+      <ul class="nav navbar-nav navbar-right" id="userBar">
+        <div class="btn-group" id="user" uib-dropdown is-open="status.isopen">
+          <a id="userDropDown" class="btn btn-default dropdown-toggle"  uib-dropdown-toggle type="button" data-toggle="dropdown" href="">{{ userName }}
+            <img src="/public/app/images/nav-profile-avatar-1x.png"></a>
+          <ul class="dropdown-menu" uib-dropdown-menu id="userMenu" role="menu">
+            <li ng-click="logOut()"><span class="fa fa-arrow-left" id="userMenuIcon"></span>{{'logout' | translate }}</li>
+            <li id="userLangForm">
+              <form id="userLangForm" class="form col-sm-12">
+                <span class="fa fa-language" id="userMenuIcon"></span>
+                <select id="userLangOption" ng-model="selectItem" ng-options="language for language in languages" ng-change="switchLanguage()">
+                  <option id="selectLang" value="">{{ "lang" | translate }}</option>
+                </select>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </ul>
+    </div><!--navbar-collapse-->
+  </div><!--container-fluid-->
+</nav><!--navbar-->
 
 
 <!--main page-->
@@ -22,13 +81,13 @@
   <div class="row sum-table">
     <div class=" col-md-10 col-md-offset-1 ng-table-responsive">
       <table ng-table="messagesTable" class="table table-bordered " >
-        <tr ng-repeat="row in $data track by row.id">
-          <td data-title="'Sender Duns'"sortable="'senderDuns'">{{row.senderDuns}}</td>
-          <td data-title="'Sender Name'" sortable="'senderName'">{{row.senderName}}</td>
-          <td data-title="'Receiver Duns'" sortable="'receiverDuns'">{{row.receiverDuns}}</td>
-          <td data-title="'Receiver Name'" sortable="'receiverName'">{{row.receiverName}}</td>
-          <td data-title="'Message Type'"  sortable="'messageType'">{{row.messageType}}</td>
-          <td data-title="'Source(UUID)'"sortable="'source'">{{row.source}}</td>
+        <tr  ng-repeat="row in $data track by row.id">
+          <td class="col-md-2 col-sm-0 col-xs-0" data-title="'Sender Duns'"sortable="'senderDuns'">{{row.senderDuns}}</td>
+          <td class="col-md-2 col-sm-3 col-xs-3" data-title="'Sender Name'" sortable="'senderName'">{{row.senderName}}</td>
+          <td class="col-md-2 col-sm-0 col-xs-0" data-title="'Receiver Duns'" sortable="'receiverDuns'">{{row.receiverDuns}}</td>
+          <td class="col-md-2 col-sm-3 col-xs-3" data-title="'Receiver Name'" sortable="'receiverName'">{{row.receiverName}}</td>
+          <td class="col-md-2 col-sm-3 col-xs-3" data-title="'Message Type'"  sortable="'messageType'">{{row.messageType}}</td>
+          <td class="col-md-2 col-sm-3 col-xs-3" data-title="'Source(UUID)'"sortable="'source'">{{row.source}}</td>
           <!--<td><span class="glyphicon glyphicon-book"></span></td>-->
           <!-- <td data-title="'sourceType'"sortable="'sourceType'">{{row.sourceType}}</td>-->
          <!-- <td data-title="'Metadata'"sortable="'metaData'">{{row.metaData}}</td>-->
