@@ -1,4 +1,4 @@
-# apollo-summarist-UI 
+# My Table 
 
 note make sure bower is update
 need to be admin
